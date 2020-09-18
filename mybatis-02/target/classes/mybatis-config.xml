@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--核心配置文件-->
+<configuration>
+
+    <!--引入外部配置文件-->
+    <!--因为就在resources下，所以不用写路径-->
+    <properties resource="db.properties">
+        <!--也可以在这里设置，但是优先执行外部配置文件，而不是这里的属性-->
+        <!--        <property name="username" value="root"/>-->
+    </properties>
+
+    <!--别名-->
+    <!--    &lt;!&ndash;可以给实体类起别名&ndash;&gt;-->
+    <!--    <typeAliases>-->
+    <!--        <typeAlias type="com.linjing.pojo.User" alias="User"/>-->
+    <!--    </typeAliases>-->
+
+    <!--扫描包-->
+    <typeAliases>
+        <package name="com.linjing.pojo"/>
+    </typeAliases>
+
+    <!--可以配置多套环境-->
+    <environments default="development">
+        <environment id="development">
+            <!--事务管理-->
+            <transactionManager type="JDBC"/>
+            <!--数据源-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+
+    <!--每个mapper.xml都需要在mybatis核心配置文件中注册-->
+    <!--    <mappers>-->
+    <!--        &lt;!&ndash;方式一： 使用相对于类路径的资源引用 &ndash;&gt;-->
+    <!--        <mapper resource="com/linjing/dao/UserMapper.xml"/>-->
+    <!--    </mappers>-->
+
+    <!--    &lt;!&ndash; 使用映射器接口实现类的完全限定类名 &ndash;&gt;-->
+    <!--    <mappers>-->
+    <!--        <mapper class="com.linjing.dao.UserMapper"/>-->
+    <!--    </mappers>-->
+
+    <!-- 将包内的映射器接口实现全部注册为映射器 -->
+    <mappers>
+        <package name="com.linjing.dao"/>
+    </mappers>
+
+</configuration>

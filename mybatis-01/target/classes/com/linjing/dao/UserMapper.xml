@@ -15,14 +15,34 @@
         select * from user
     </select>
 
+    <!--模糊查询-->
+    <select id="getUserLike" resultType="com.linjing.pojo.User">
+        select * from user where name like "%"#{value}"%";
+    </select>
+
+
     <select id="getUserById" parameterType="int" resultType="com.linjing.pojo.User">
         select * from user where id = #{id}
     </select>
+
+    <!--    &lt;!&ndash;map&ndash;&gt;-->
+    <!--    <select id="getUserById2" parameterType="map" resultType="com.linjing.pojo.User">-->
+    <!--        select * from user where id = #{id} and name = #{name};-->
+    <!--    </select>-->
+
 
     <!--对象中的属性，可以直接取出来-->
     <insert id="addUser" parameterType="com.linjing.pojo.User">
         insert into user (id, name, pwd) values (#{id}, #{name}, #{pwd})
     </insert>
+
+    <!--map:-->
+    <!--参数类型是map, 通过map可以随意制造参数，只插入自己想要插入的那部分属性
+    传入的值是map里的键-->
+    <!--    <insert id="addUser2" parameterType="map">-->
+    <!--        insert into user (id, name, pwd) values (#{userId}, #{userName}, #{passWord})-->
+    <!--    </insert>-->
+
 
     <update id="updateUser" parameterType="com.linjing.pojo.User">
         update user set name = #{name}, pwd= #{pwd} where id = #{id};

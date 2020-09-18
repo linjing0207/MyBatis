@@ -5,7 +5,6 @@ import com.linjing.utils.MybatisUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class UserDaoTest {
@@ -21,9 +20,6 @@ public class UserDaoTest {
             UserMapper mapper = session.getMapper(UserMapper.class);
             List<User> userList = mapper.getUserList();
 
-            //方式二：原来的方式（不推荐使用）
-            //        List<User> userList = sqlSession.selectList("com.linjing.dao.UserDao.getUserList");
-
             for (User user : userList) {
                 System.out.println(user);
             }
@@ -35,34 +31,10 @@ public class UserDaoTest {
         }
     }
 
-    @Test public void testGetUserLike() {
-        SqlSession session = MybatisUtils.getSqlSession();
-        UserMapper mapper = session.getMapper(UserMapper.class);
-        List<User> userList = mapper.getUserLike("li");
-        for (User user : userList) {
-            System.out.println(user);
-        }
-
-        session.close();
-    }
-
     @Test public void testGetUserById() {
         SqlSession session = MybatisUtils.getSqlSession();
         UserMapper mapper = session.getMapper(UserMapper.class);
         User user = mapper.getUserById(1);
-        System.out.println(user);
-
-        session.close();
-    }
-
-    @Test public void testGetUserById2() {
-        SqlSession session = MybatisUtils.getSqlSession();
-        UserMapper mapper = session.getMapper(UserMapper.class);
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("id", 1);
-        map.put("name", "lulu");
-
-        User user = mapper.getUserById2(map);
         System.out.println(user);
 
         session.close();
@@ -77,23 +49,6 @@ public class UserDaoTest {
         if (n > 0) {
             System.out.println("插入成功");
         }
-
-        //提交事物
-        session.commit(); //很重要！！不写提交不了。
-        session.close();
-    }
-
-    @Test public void testAddUser2() {
-
-        SqlSession session = MybatisUtils.getSqlSession();
-        UserMapper mapper = session.getMapper(UserMapper.class);
-
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("userId", 5);
-        map.put("userName", "hello");
-        map.put("passWord", "4324");
-
-        mapper.addUser2(map);
 
         //提交事物
         session.commit(); //很重要！！不写提交不了。
